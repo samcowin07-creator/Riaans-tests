@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riaans Tests - Test Management</title>
+  <style>
+    :root {
+  /* Primitive Color Tokens */
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+
+  /* RGB versions for opacity control */
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+
+  /* Background color tokens (Light Mode) */
+  --color-bg-1: rgba(59, 130, 246, 0.08);
+  --color-bg-2: rgba(245, 158, 11, 0.08);
+  --color-bg-3: rgba(34, 197, 94, 0.08);
+  --color-bg-4: rgba(239, 68, 68, 0.08);
+  --color-bg-5: rgba(147, 51, 234, 0.08);
+  --color-bg-6: rgba(249, 115, 22, 0.08);
+  --color-bg-7: rgba(236, 72, 153, 0.08);
+  --color-bg-8: rgba(6, 182, 212, 0.08);
+
+  /* Semantic Color Tokens (Light Mode) */
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-btn-primary-text: var(--color-cream-50);
+  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --color-warning: var(--color-orange-500);
+  --color-info: var(--color-slate-500);
+  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+  --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+  /* Common style patterns */
+  --focus-ring: 0 0 0 3px var(--color-focus-ring);
+  --focus-outline: 2px solid var(--color-primary);
+  --status-bg-opacity: 0.15;
+  --status-border-opacity: 0.25;
+  --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+  /* RGB versions for opacity control */
+  --color-success-rgb: 33, 128, 141;
+  --color-error-rgb: 192, 21, 47;
+  --color-warning-rgb: 168, 75, 47;
+  --color-info-rgb: 98, 108, 113;
+
+  /* Typography */
+  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --letter-spacing-tight: -0.01em;
+
+  /* Spacing */
+  --space-0: 0;
+  --space-1: 1px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-base: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04),
+    0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04),
+    0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+
+  /* Animation */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+
+    --color-bg-1: rgba(29, 78, 216, 0.15);
+    --color-bg-2: rgba(180, 83, 9, 0.15);
+    --color-bg-3: rgba(21, 128, 61, 0.15);
+    --color-bg-4: rgba(185, 28, 28, 0.15);
+    --color-bg-5: rgba(107, 33, 168, 0.15);
+    --color-bg-6: rgba(194, 65, 12, 0.15);
+    --color-bg-7: rgba(190, 24, 93, 0.15);
+    --color-bg-8: rgba(8, 145, 178, 0.15);
+
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+    --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-error: var(--color-red-400);
+    --color-success: var(--color-teal-300);
+    --color-warning: var(--color-orange-400);
+    --color-info: var(--color-gray-300);
+    --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+    --color-btn-primary-text: var(--color-slate-900);
+    --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+    --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+    --color-success-rgb: var(--color-teal-300-rgb);
+    --color-error-rgb: var(--color-red-400-rgb);
+    --color-warning-rgb: var(--color-orange-400-rgb);
+    --color-info-rgb: var(--color-gray-300-rgb);
+  }
+}
+
+@font-face {
+  font-family: 'FKGroteskNeue';
+  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
+    format('woff2');
+}
+
+html {
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+h1 { font-size: var(--font-size-4xl); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl); }
+
+p {
+  margin: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  border: none;
+  text-decoration: none;
+  position: relative;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-btn-primary-text);
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn--primary:active {
+  background: var(--color-primary-active);
+}
+
+.btn--secondary {
+  background: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.btn--secondary:hover {
+  background: var(--color-secondary-hover);
+}
+
+.btn--sm {
+  padding: var(--space-6) var(--space-12);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--space-8) var(--space-12);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+textarea.form-control {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  resize: vertical;
+  min-height: 80px;
+}
+
+select.form-control {
+  padding: var(--space-8) var(--space-12);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: var(--select-caret-light);
+  background-repeat: no-repeat;
+  background-position: right var(--space-12) center;
+  background-size: 16px;
+  padding-right: var(--space-32);
+}
+
+@media (prefers-color-scheme: dark) {
+  select.form-control {
+    background-image: var(--select-caret-dark);
+  }
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  outline: var(--focus-outline);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-8);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.form-group {
+  margin-bottom: var(--space-16);
+}
+
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--duration-normal) var(--ease-standard);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-6) var(--space-12);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+.status--success {
+  background-color: rgba(var(--color-success-rgb, 33, 128, 141), var(--status-bg-opacity));
+  color: var(--color-success);
+  border: 1px solid rgba(var(--color-success-rgb, 33, 128, 141), var(--status-border-opacity));
+}
+
+.status--error {
+  background-color: rgba(var(--color-error-rgb, 192, 21, 47), var(--status-bg-opacity));
+  color: var(--color-error);
+  border: 1px solid rgba(var(--color-error-rgb, 192, 21, 47), var(--status-border-opacity));
+}
+
+.status--warning {
+  background-color: rgba(var(--color-warning-rgb, 168, 75, 47), var(--status-bg-opacity));
+  color: var(--color-warning);
+  border: 1px solid rgba(var(--color-warning-rgb, 168, 75, 47), var(--status-border-opacity));
+}
+
+/* App specific styles */
+.app-container {
+  min-height: 100vh;
+  padding: var(--space-24);
+}
+
+.app-header {
+  max-width: 1200px;
+  margin: 0 auto var(--space-32);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+}
+
+.app-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.tests-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-20);
+}
+
+.test-card {
+  padding: var(--space-20);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.test-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-12);
+}
+
+.test-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  flex: 1;
+}
+
+.test-card__description {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.test-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.test-card__files {
+  margin-top: var(--space-8);
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--color-card-border-inner);
+}
+
+.test-card__files-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+}
+
+.test-card__files-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-8);
+  background-color: var(--color-bg-1);
+  border-radius: var(--radius-sm);
+  gap: var(--space-8);
+}
+
+.file-item__name {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  word-break: break-word;
+  flex: 1;
+}
+
+.test-card__actions {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: var(--space-12);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-16);
+}
+
+.modal {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  box-shadow: var(--shadow-lg);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal__header {
+  padding: var(--space-20);
+  border-bottom: 1px solid var(--color-card-border-inner);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: var(--space-4);
+  line-height: 1;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.modal__close:hover {
+  color: var(--color-text);
+}
+
+.modal__body {
+  padding: var(--space-20);
+}
+
+.modal__footer {
+  padding: var(--space-20);
+  border-top: 1px solid var(--color-card-border-inner);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-12);
+}
+
+.file-upload-area {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-base);
+  padding: var(--space-16);
+  text-align: center;
+  background-color: var(--color-bg-1);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.file-upload-area:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-bg-2);
+}
+
+.file-upload-area__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+}
+
+.file-upload-area__input {
+  display: none;
+}
+
+.attached-files-list {
+  margin-top: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.attached-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-8) var(--space-12);
+  background-color: var(--color-bg-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-card-border-inner);
+}
+
+.attached-file__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.attached-file__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.attached-file__size {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.attached-file__remove {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  padding: var(--space-4);
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.attached-file__remove:hover {
+  opacity: 0.7;
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-32) var(--space-16);
+  color: var(--color-text-secondary);
+}
+
+.empty-state__icon {
+  font-size: 48px;
+  margin-bottom: var(--space-16);
+}
+
+.empty-state__text {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tests-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .test-card__actions {
+    flex-direction: column;
+  }
+
+  .modal__footer {
+    flex-direction: column;
+  }
+
+  .modal__footer .btn {
+    width: 100%;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1 class="app-title">Riaans Tests</h1>
+      <button class="btn btn--primary" id="addTestBtn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-right: 8px;">
+          <path d="M8 3.5V12.5M3.5 8H12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Add Test
+      </button>
+    </header>
+
+    <div id="testsGrid" class="tests-grid"></div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal-overlay" style="display: none;">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title" id="modalTitle">Add Test</h2>
+        <button class="modal__close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal__body">
+        <form id="testForm">
+          <div class="form-group">
+            <label class="form-label" for="testName">Test Name</label>
+            <input type="text" id="testName" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="testDescription">Description</label>
+            <textarea id="testDescription" class="form-control" required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="testDate">Date</label>
+            <input type="date" id="testDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="testStatus">Status</label>
+            <select id="testStatus" class="form-control" required>
+              <option value="pending">Pending</option>
+              <option value="passed">Passed</option>
+              <option value="failed">Failed</option>
+            </select>
+          </div>
+          <div class="form-group" id="scoreGroup">
+            <label class="form-label" for="testScore">Score (optional)</label>
+            <input type="number" id="testScore" class="form-control" min="0" max="100">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Attach Files</label>
+            <div class="file-upload-area" id="fileUploadArea">
+              <div class="file-upload-area__text">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="margin: 0 auto 8px;">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div>Click to upload or drag and drop</div>
+                <div style="font-size: 11px; margin-top: 4px;">PDF, DOCX, XLSX, TXT, JPG, PNG</div>
+              </div>
+              <input type="file" id="fileInput" class="file-upload-area__input" multiple accept=".pdf,.docx,.xlsx,.txt,.jpg,.jpeg,.png">
+            </div>
+            <div id="attachedFilesList" class="attached-files-list"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--secondary" id="modalCancel">Cancel</button>
+        <button class="btn btn--primary" id="modalSave">Save Test</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // In-memory storage for tests
+    let tests = [
+      {
+        id: 1,
+        name: "Biology Unit 1 - Genetics",
+        description: "Comprehensive test covering DNA replication, mitosis, and inheritance patterns.",
+        date: "2025-11-18",
+        status: "passed",
+        score: 92,
+        files: []
+      },
+      {
+        id: 2,
+        name: "Chemistry - Stoichiometry",
+        description: "Test on balancing equations and molar calculations.",
+        date: "2025-11-15",
+        status: "passed",
+        score: 87,
+        files: []
+      },
+      {
+        id: 3,
+        name: "Mathematics - Calculus",
+        description: "Limits, derivatives, and integral calculus problems.",
+        date: "2025-11-12",
+        status: "pending",
+        score: null,
+        files: []
+      },
+      {
+        id: 4,
+        name: "Physics - Kinematics",
+        description: "Motion, velocity, acceleration, and projectile motion.",
+        date: "2025-11-10",
+        status: "failed",
+        score: 64,
+        files: []
+      },
+      {
+        id: 5,
+        name: "English - Literary Analysis",
+        description: "IB Paper 1 - Analysis of poems and prose extracts.",
+        date: "2025-11-08",
+        status: "passed",
+        score: 88,
+        files: []
+      }
+    ];
+
+    let currentEditId = null;
+    let tempFiles = [];
+
+    // DOM elements
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const testForm = document.getElementById('testForm');
+    const testsGrid = document.getElementById('testsGrid');
+    const addTestBtn = document.getElementById('addTestBtn');
+    const modalClose = document.getElementById('modalClose');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalSave = document.getElementById('modalSave');
+    const fileInput = document.getElementById('fileInput');
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const attachedFilesList = document.getElementById('attachedFilesList');
+    const testStatus = document.getElementById('testStatus');
+    const scoreGroup = document.getElementById('scoreGroup');
+
+    // Initialize app
+    function init() {
+      renderTests();
+      attachEventListeners();
+    }
+
+    // Attach event listeners
+    function attachEventListeners() {
+      addTestBtn.addEventListener('click', openAddTestModal);
+      modalClose.addEventListener('click', closeModal);
+      modalCancel.addEventListener('click', closeModal);
+      modalSave.addEventListener('click', saveTest);
+      fileUploadArea.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', handleFileSelect);
+      testStatus.addEventListener('change', toggleScoreField);
+
+      // Close modal on overlay click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Drag and drop
+      fileUploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        fileUploadArea.style.borderColor = 'var(--color-primary)';
+      });
+
+      fileUploadArea.addEventListener('dragleave', () => {
+        fileUploadArea.style.borderColor = 'var(--color-border)';
+      });
+
+      fileUploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileUploadArea.style.borderColor = 'var(--color-border)';
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+      });
+    }
+
+    // Toggle score field based on status
+    function toggleScoreField() {
+      const status = testStatus.value;
+      if (status === 'pending') {
+        scoreGroup.style.display = 'none';
+        document.getElementById('testScore').value = '';
+      } else {
+        scoreGroup.style.display = 'block';
+      }
+    }
+
+    // Open add test modal
+    function openAddTestModal() {
+      currentEditId = null;
+      tempFiles = [];
+      modalTitle.textContent = 'Add Test';
+      testForm.reset();
+      attachedFilesList.innerHTML = '';
+      scoreGroup.style.display = 'block';
+      document.getElementById('testDate').valueAsDate = new Date();
+      modal.style.display = 'flex';
+    }
+
+    // Open edit test modal
+    function openEditTestModal(id) {
+      const test = tests.find(t => t.id === id);
+      if (!test) return;
+
+      currentEditId = id;
+      tempFiles = [...test.files];
+      modalTitle.textContent = 'Edit Test';
+
+      document.getElementById('testName').value = test.name;
+      document.getElementById('testDescription').value = test.description;
+      document.getElementById('testDate').value = test.date;
+      document.getElementById('testStatus').value = test.status;
+      document.getElementById('testScore').value = test.score || '';
+
+      toggleScoreField();
+      renderAttachedFiles();
+      modal.style.display = 'flex';
+    }
+
+    // Close modal
+    function closeModal() {
+      modal.style.display = 'none';
+      currentEditId = null;
+      tempFiles = [];
+      testForm.reset();
+      attachedFilesList.innerHTML = '';
+    }
+
+    // Handle file selection
+    function handleFileSelect(e) {
+      const files = e.target.files;
+      handleFiles(files);
+      fileInput.value = ''; // Reset input
+    }
+
+    // Handle files
+    function handleFiles(files) {
+      const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/plain', 
+                            'image/jpeg', 'image/png', 'image/jpg'];
+      
+      Array.from(files).forEach(file => {
+        if (allowedTypes.includes(file.type) || file.name.match(/\.(pdf|docx|xlsx|txt|jpg|jpeg|png)$/i)) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            tempFiles.push({
+              name: file.name,
+              size: file.size,
+              type: file.type,
+              data: e.target.result
+            });
+            renderAttachedFiles();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    // Render attached files in modal
+    function renderAttachedFiles() {
+      if (tempFiles.length === 0) {
+        attachedFilesList.innerHTML = '';
+        return;
+      }
+
+      attachedFilesList.innerHTML = tempFiles.map((file, index) => `
+        <div class="attached-file">
+          <div class="attached-file__info">
+            <div class="attached-file__name">${escapeHtml(file.name)}</div>
+            <div class="attached-file__size">${formatFileSize(file.size)}</div>
+          </div>
+          <button type="button" class="attached-file__remove" onclick="removeFile(${index})">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    // Remove file from temp list
+    function removeFile(index) {
+      tempFiles.splice(index, 1);
+      renderAttachedFiles();
+    }
+
+    // Save test
+    function saveTest() {
+      const name = document.getElementById('testName').value.trim();
+      const description = document.getElementById('testDescription').value.trim();
+      const date = document.getElementById('testDate').value;
+      const status = document.getElementById('testStatus').value;
+      const score = document.getElementById('testScore').value;
+
+      if (!name || !description || !date || !status) {
+        alert('Please fill in all required fields');
+        return;
+      }
+
+      const testData = {
+        name,
+        description,
+        date,
+        status,
+        score: status === 'pending' ? null : (score ? parseInt(score) : null),
+        files: tempFiles
+      };
+
+      if (currentEditId) {
+        // Edit existing test
+        const index = tests.findIndex(t => t.id === currentEditId);
+        tests[index] = { ...tests[index], ...testData };
+      } else {
+        // Add new test
+        const newTest = {
+          id: Date.now(),
+          ...testData
+        };
+        tests.unshift(newTest);
+      }
+
+      closeModal();
+      renderTests();
+    }
+
+    // Delete test
+    function deleteTest(id) {
+      if (confirm('Are you sure you want to delete this test?')) {
+        tests = tests.filter(t => t.id !== id);
+        renderTests();
+      }
+    }
+
+    // Download file
+    function downloadFile(testId, fileIndex) {
+      const test = tests.find(t => t.id === testId);
+      if (!test || !test.files[fileIndex]) return;
+
+      const file = test.files[fileIndex];
+      const link = document.createElement('a');
+      link.href = file.data;
+      link.download = file.name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Render tests
+    function renderTests() {
+      if (tests.length === 0) {
+        testsGrid.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <div class="empty-state__icon">📝</div>
+            <div class="empty-state__text">No tests yet</div>
+            <p>Click "Add Test" to create your first test</p>
+          </div>
+        `;
+        return;
+      }
+
+      testsGrid.innerHTML = tests.map(test => {
+        const statusClass = test.status === 'passed' ? 'status--success' : 
+                           test.status === 'failed' ? 'status--error' : 'status--warning';
+        
+        const filesHtml = test.files && test.files.length > 0 ? `
+          <div class="test-card__files">
+            <div class="test-card__files-title">Attached Files (${test.files.length})</div>
+            <div class="test-card__files-list">
+              ${test.files.map((file, index) => `
+                <div class="file-item">
+                  <div class="file-item__name">${escapeHtml(file.name)}</div>
+                  <button class="btn btn--sm btn--primary" onclick="downloadFile(${test.id}, ${index})">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-right: 4px;">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Download
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : '';
+
+        return `
+          <div class="card test-card">
+            <div class="test-card__header">
+              <h3 class="test-card__title">${escapeHtml(test.name)}</h3>
+              <span class="status ${statusClass}">${test.status}</span>
+            </div>
+            <p class="test-card__description">${escapeHtml(test.description)}</p>
+            <div class="test-card__meta">
+              <div>📅 ${formatDate(test.date)}</div>
+              ${test.score !== null ? `<div>📊 Score: ${test.score}%</div>` : ''}
+            </div>
+            ${filesHtml}
+            <div class="test-card__actions">
+              <button class="btn btn--secondary btn--sm" onclick="openEditTestModal(${test.id})" style="flex: 1;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-right: 4px;">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Edit
+              </button>
+              <button class="btn btn--secondary btn--sm" onclick="deleteTest(${test.id})" style="flex: 1;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-right: 4px;">
+                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Delete
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Helper functions
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Make functions globally accessible
+    window.openEditTestModal = openEditTestModal;
+    window.deleteTest = deleteTest;
+    window.downloadFile = downloadFile;
+    window.removeFile = removeFile;
+
+    // Initialize app when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
